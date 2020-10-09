@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    public int cardSuit;
+    [HideInInspector] public int cardSuit;
     /*
      * Suit Values:
      * 0: Spades
@@ -14,7 +14,7 @@ public class Card : MonoBehaviour
      * 3: Diamonds
      */
 
-    public int faceValue;
+    [HideInInspector] public int faceValue;
     /*
      * Face Values:
      * 0: Ace
@@ -32,7 +32,7 @@ public class Card : MonoBehaviour
      * 12: King
      */
 
-    public int pointValue = 0;
+    [HideInInspector] public int pointValue = 0;
     /*
      * This can be one of three values and is used to determine a cards point value
      * 0: The card is not a heart and is worth no points
@@ -42,15 +42,15 @@ public class Card : MonoBehaviour
      * The total value of points in a deck should never exceed 26.
      */
 
-    public TextMeshPro suitText; //Text Mesh Pro For displaying the card suit
+    public TMP_Text suitText; //Text Mesh Pro For displaying the card suit
 
-    public TextMeshPro valueText; //Text Mesh Pro for displaying the Value of the card
+    public TMP_Text valueText; //Text Mesh Pro for displaying the Value of the card
 
-    void Start()
+    /*void Start()
     {
         AssignSuit();
         AssignValue();
-    }
+    }*/
 
     /// <summary>
     /// This function takes the value of cardSuit integer and uses the value to output that suit into a Text Mesh Pro text box.
