@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
@@ -42,9 +44,9 @@ public class Card : MonoBehaviour
      * The total value of points in a deck should never exceed 26.
      */
 
-    public TMP_Text suitText; //Text Mesh Pro For displaying the card suit
+    public TextMeshProUGUI suitText; //Text Mesh Pro For displaying the card suit
 
-    public TMP_Text valueText; //Text Mesh Pro for displaying the Value of the card
+    public TextMeshProUGUI valueText; //Text Mesh Pro for displaying the Value of the card
 
     /*void Start()
     {
@@ -123,5 +125,12 @@ public class Card : MonoBehaviour
                 valueText.text = "King";
                 break;
         }
+    }
+
+    public void Init(UnityAction callBack)
+    {
+        Button bttn = GetComponent<Button>();
+
+        bttn.onClick.AddListener(callBack);
     }
 }

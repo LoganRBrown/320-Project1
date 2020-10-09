@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PLayer : MonoBehaviour
+public class Player : MonoBehaviour
 {
     /*
      * TO DO:
@@ -24,6 +24,8 @@ public class PLayer : MonoBehaviour
      */
 
     public int playerScore;
+
+    public Card cardPrefab;
 
     public List<Card> playerHand = new List<Card>();
 
@@ -65,6 +67,23 @@ public class PLayer : MonoBehaviour
     public void PlayerChoseCard()
     {
 
+    }
+
+    public void DisplayPlayerHand()
+    {
+
+        for(int i = 0; i < playerHand.Count; i++)
+        {
+            Card card = Instantiate(cardPrefab);
+
+            card.Init(() => { ButtonClicked(card);  });
+        }
+
+    }
+
+    void ButtonClicked(Card card)
+    {
+        //put the packet send code here.
     }
 
     public void EndOfRound()

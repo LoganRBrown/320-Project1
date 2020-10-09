@@ -17,7 +17,9 @@ public class HeartsGame : MonoBehaviour
      * 
      */
 
-    public Deck deckForGame;  
+    public Deck deckForGame;
+
+    public List<Player> listOfPlayers = new List<Player>();
 
     void Start()
     {
@@ -47,6 +49,11 @@ public class HeartsGame : MonoBehaviour
         {
             deckForGame.CreateDeck();
         }
+
+        // We shuffle three time because that's the appropriate amount of times to shuffle.
+        deckForGame.Shuffle();
+        deckForGame.Shuffle();
+        deckForGame.Shuffle();
     }
 
     public void RoundScoring()
@@ -61,6 +68,22 @@ public class HeartsGame : MonoBehaviour
 
     public void DealCards()
     {
+
+        Card tempCard;
+
+        while (deckForGame.deckOfCards.Count != 0)
+        {
+            for (int i = 0; i < listOfPlayers.Count; i++)
+            {
+
+                tempCard = deckForGame.deckOfCards[0];
+
+                listOfPlayers[i].PlayerDealtCard(tempCard);
+
+                deckForGame.deckOfCards.Remove(tempCard);
+
+            }
+        }
 
     }
 
