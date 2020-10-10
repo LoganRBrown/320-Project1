@@ -85,6 +85,8 @@ public class HeartsGame : MonoBehaviour
             }
         }
 
+        listOfPlayers.ForEach(x => { x.DisplayPlayerHand(); });
+
     }
 
     public void HandlePot()

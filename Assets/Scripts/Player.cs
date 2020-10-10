@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
      * function to display cards in hand
      */
 
+    private int columns;
+    private int rows = 1;
+
     public int playerScore;
 
     public Card cardPrefab;
@@ -30,6 +33,10 @@ public class Player : MonoBehaviour
     public List<Card> playerHand = new List<Card>();
 
     public List<Card> playerPot = new List<Card>();
+
+    public Transform panelPlayerHand;
+
+    private Card[,] handUI;
 
 
     void Start()
@@ -72,11 +79,20 @@ public class Player : MonoBehaviour
     public void DisplayPlayerHand()
     {
 
-        for(int i = 0; i < playerHand.Count; i++)
-        {
-            Card card = Instantiate(cardPrefab);
+        columns = playerHand.Count;
 
-            card.Init(() => { ButtonClicked(card);  });
+        handUI = new Card[columns, rows];
+
+        for(int x = 0; x < columns; x++)
+        {
+            for (int y = 0; y < rows; y++)
+            {
+                Card card = Instantiate(cardPrefab, panelPlayerHand);
+
+                card.Init(new HandPos(x, y), () => { ButtonClicked(card); });
+
+                handUI[x, y] = card;
+            }
         }
 
     }

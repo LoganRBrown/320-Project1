@@ -5,11 +5,23 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+
+public struct HandPos
+{
+    public int x;
+    public int y;
+
+    public HandPos(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+}
+
 public class Card : MonoBehaviour
 {
     [HideInInspector] public int cardSuit;
-    /*
-     * Suit Values:
+    /* Suit Values:
      * 0: Spades
      * 1: Clubs
      * 2: Hearts
@@ -17,8 +29,7 @@ public class Card : MonoBehaviour
      */
 
     [HideInInspector] public int faceValue;
-    /*
-     * Face Values:
+    /* Face Values:
      * 0: Ace
      * 1: Two
      * 2: Three
@@ -47,6 +58,8 @@ public class Card : MonoBehaviour
     public TextMeshProUGUI suitText; //Text Mesh Pro For displaying the card suit
 
     public TextMeshProUGUI valueText; //Text Mesh Pro for displaying the Value of the card
+
+    public HandPos pos;
 
     /*void Start()
     {
@@ -127,8 +140,10 @@ public class Card : MonoBehaviour
         }
     }
 
-    public void Init(UnityAction callBack)
+    public void Init(HandPos pos, UnityAction callBack)
     {
+        this.pos = pos;
+
         Button bttn = GetComponent<Button>();
 
         bttn.onClick.AddListener(callBack);
