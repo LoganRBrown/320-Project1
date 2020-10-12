@@ -6,9 +6,9 @@ public class Player : MonoBehaviour
 {
     /*
      * TO DO:
-     * Create a variable to handle a player's points
-     * create a List to handle a player's hand of cards
-     * create a List to handle a player's pot of cards for a round
+     * Create a variable to handle a player's points -- DONE
+     * create a List to handle a player's hand of cards -- DONE
+     * create a List to handle a player's pot of cards for a round -- DONE
      * create a function that handles when the player recieves a pot of cards
      * create a function the handles when a player is dealt cards
      * create a function that handles when a player plays a card
@@ -28,7 +28,15 @@ public class Player : MonoBehaviour
 
     public int playerScore;
 
+    [HideInInspector] public int playerScoreForRound;
+
     public Card cardPrefab;
+
+    public bool isTurn = false;
+
+    public bool hasShotMoon = false;
+
+    public bool hasPlayedAllCards = false;
 
     public List<Card> playerHand = new List<Card>();
 
@@ -47,7 +55,7 @@ public class Player : MonoBehaviour
     
     void Update()
     {
-        
+        if (playerHand.Count == 0) hasPlayedAllCards = true;
     }
 
     /// <summary>
@@ -68,14 +76,6 @@ public class Player : MonoBehaviour
         playerHand.Add(card);
     }
 
-    /// <summary>
-    /// This function handles when a player chooses a card to play for their turn in a round.
-    /// </summary>
-    public void PlayerChoseCard()
-    {
-
-    }
-
     public void DisplayPlayerHand()
     {
 
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
             {
                 Card card = Instantiate(cardPrefab, panelPlayerHand);
 
-                card.Init(new HandPos(x, y), () => { ButtonClicked(card); });
+                card.Init(new HandPos(x, y), () => { CardClicked(card); }, this);
 
                 handUI[x, y] = card;
             }
@@ -97,13 +97,27 @@ public class Player : MonoBehaviour
 
     }
 
-    void ButtonClicked(Card card)
+    void CardClicked(Card card)
     {
-        //put the packet send code here.
+        ControllerGameClient.singleton.SendPlayPacket(card.cardSuit, card.faceValue);
     }
 
     public void EndOfRound()
     {
+        /*
+         * TODO: 
+         * Add all cards collected for that round to player's point value.
+         * determine if player has shot the moon
+         * empty out a players pot for that round
+         */
+
+        playerPot.ForEach(c => { playerScoreForRound += c.pointValue; }) ;
+
+        if (playerScoreForRound == 26) hasShotMoon = true;
+
+        else playerScore += playerScoreForRound;
+
+        playerPot.Clear();
 
     }
 }

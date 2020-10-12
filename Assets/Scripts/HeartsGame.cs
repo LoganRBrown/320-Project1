@@ -58,7 +58,17 @@ public class HeartsGame : MonoBehaviour
 
     public void RoundScoring()
     {
+        bool someoneShotMoon = false;
 
+        listOfPlayers.ForEach(x => { x.EndOfRound(); });
+
+        listOfPlayers.ForEach(p => { 
+            if (p.hasShotMoon) 
+            { 
+                someoneShotMoon = true;
+            }
+            if (!p.hasShotMoon && someoneShotMoon) p.playerScore += 26;
+        });
     }
 
     public void GameScoring()

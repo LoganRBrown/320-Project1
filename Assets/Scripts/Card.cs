@@ -55,6 +55,8 @@ public class Card : MonoBehaviour
      * The total value of points in a deck should never exceed 26.
      */
 
+    [HideInInspector] public Player ownedBy;
+
     public TextMeshProUGUI suitText; //Text Mesh Pro For displaying the card suit
 
     public TextMeshProUGUI valueText; //Text Mesh Pro for displaying the Value of the card
@@ -140,12 +142,15 @@ public class Card : MonoBehaviour
         }
     }
 
-    public void Init(HandPos pos, UnityAction callBack)
+    public void Init(HandPos pos, UnityAction callBack, Player player)
     {
         this.pos = pos;
 
         Button bttn = GetComponent<Button>();
 
         bttn.onClick.AddListener(callBack);
+
+        ownedBy = player;
     }
+
 }
