@@ -32,13 +32,13 @@ public static class PacketBuilder
         return packet;
     }
 
-    public static Buffer Play(int x, int y)
+    public static Buffer Play(int suit, int val)
     {
         Buffer packet = Buffer.Alloc(6);
 
         packet.WriteString("PLAY");
-        packet.WriteUInt8((byte)x, 4);
-        packet.WriteUInt8((byte)y, 5);
+        packet.WriteUInt8((byte)suit, 4);
+        packet.WriteUInt8((byte)val, 5);
 
         return packet;
     }

@@ -1,0 +1,121 @@
+Hearts Protocol (HP) v1.0
+===========================
+
+What state needs to be stored on server?
+- state of card table
+- whose turn it is
+- if the round is over
+- if someone has won
+
+Packets from the Server
+----------------------------
+
+JOIN (response) - when the server recieves a JOIN packet, it must decide whether or not the client is allowed to join.
+
+		O 		L 		Datatype 		Desc
+--------------------------------------------------
+		0		4		ascii			packet type: "JOIN"
+		4		1		uint8			join response (see below)
+		5		1		uint8			Seat at the table (up to 8 seats)
+
+		join response
+		----------------------------
+		(accepted:)
+		0: denied
+		1: player
+		2: spectator
+		(denied:)
+		3: username to short
+		4: username to long
+		5: username has invalid characters
+		6: username already taken
+		7: username not allowed(Profane?)
+		8: game is full
+
+UPDT - the state of the game
+
+		O 		L 		Datatype 		Desc
+-------------------------------------------------------------
+		0		4		ascii			packet type: "UPDT"
+		4		1		uint8			whose turn(1-8)
+		5		1		uint8			who's won? (see below)
+		6		1		uint8			Card Suit
+		7		1		uint8			Card Face Value
+
+		who's won
+		-------------------------------
+		0: playing the game...(no winner)
+		1: player 1 has won the game
+		2: player 2 has won the game
+		3: player 3 has won the game
+		4: player 4 has won the game
+		5: player 5 has won the game
+		6: player 6 has won the game
+		7: player 7 has won the game
+		8: player 8 has won the game
+		9: the game has been cancelled
+
+		what card has been played
+		----------------------------
+		Cards require 2 values; a suit and the face value of the card.
+
+		Suit
+		-------------
+		0: Spades
+		1: Clubs
+		2: Hearts
+		3: Diamonds
+
+		Face Value
+		------------------
+		0: Ace
+    	1: Two
+    	2: Three
+    	3: Four
+    	4: Five
+    	5: Six
+    	6: Seven
+    	7: Eight
+    	8: Nine
+    	9: Ten
+    	10: Jack
+    	11: Queen
+    	12: King
+
+CHAT - When recieving a CHAT packet from a client, the server sends this chat packet out to all connected, except for the original sender.
+
+		O 		L 		Datatype 		Desc
+-------------------------------------------------------------
+		0		4		ascii			packet type: "CHAT"
+		4		1		uint8			length of senders username
+		5		2		uint16			length of chat message
+		7		X 		ascii			senders username X = length of username
+		7+X 	Y 		ascii			chat message Y = length of chat message 	
+
+
+Packets from the client
+-----------------------
+
+JOIN (request) - After establishing a connection w/ the server, client will send a JOIN packet w/ a desired username. The server will send back a response.
+
+		O 		L 		Datatype 		Desc
+--------------------------------------------------
+		0		4		ascii			packet type: "JOIN"
+		4		1		uint8 			how long username is (255 max)
+		5		X		ascii			X = desired username for the connected client
+
+CHAT - The player wants to chat.
+
+		O 		L 		Datatype 		Desc
+-------------------------------------------------------------
+		0		4		ascii			packet type: "CHAT"
+		4		2		uint16			length of message
+		6		X 		ascii			X = length of message for chat (65535 max)
+
+PLAY - This packet should be submitted when the play takes their turn.
+
+		O 		L 		Datatype 		Desc
+-------------------------------------------------------------
+		0		4		ascii			packet type: "PLAY"
+		4		1		uint8			Card Suit
+		5		1		uint8			Card Face Value

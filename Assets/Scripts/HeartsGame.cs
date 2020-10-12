@@ -108,4 +108,13 @@ public class HeartsGame : MonoBehaviour
     {
 
     }
+
+    public void UpdateFromServer(byte gameStatus, byte whoseTurn, byte[] spaces)
+    {
+        // TODO: update all of the interface to reflect game state:
+        // - Whose Turn
+        // - 9 space on board
+        // - status
+
+    }
 }
