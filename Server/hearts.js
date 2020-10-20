@@ -1,4 +1,4 @@
-const server = require("./server.js");
+const server = require("./server.js").Server;
 const PacketBuilder = require("./packet-builder.js").PacketBuilder;
 
 
