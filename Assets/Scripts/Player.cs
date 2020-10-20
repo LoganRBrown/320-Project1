@@ -46,6 +46,10 @@ public class Player : MonoBehaviour
 
     private Card[,] handUI;
 
+    public bool hasPlayerPassed = false;
+
+    private List<Card> wantsToPass = new List<Card>();
+
 
     void Start()
     {
@@ -87,11 +91,14 @@ public class Player : MonoBehaviour
         {
             for (int y = 0; y < rows; y++)
             {
-                Card card = Instantiate(cardPrefab, panelPlayerHand);
+                for(int i = 0; i <= playerHand.Count; i++)
+                {
+                    playerHand[i] = Instantiate(cardPrefab, panelPlayerHand);
 
-                card.Init(new HandPos(x, y), () => { CardClicked(card); }, this);
+                    playerHand[i].Init(new HandPos(x, y), () => { CardClicked(playerHand[i]); }, this);
 
-                handUI[x, y] = card;
+                    handUI[x, y] = playerHand[i];
+                }
             }
         }
 
@@ -99,7 +106,30 @@ public class Player : MonoBehaviour
 
     void CardClicked(Card card)
     {
-        ControllerGameClient.singleton.SendPlayPacket(card.cardSuit, card.faceValue);
+
+        if (hasPlayerPassed)
+        {
+            ControllerGameClient.singleton.SendPlayPacket(card.cardSuit, card.faceValue);
+
+            isTurn = false;
+        }
+
+        if (!hasPlayerPassed)
+        {
+            if(wantsToPass.Count < 3)
+            {
+                wantsToPass.Add(card);
+                //add a glow affect so the player knows what cards have been selected.
+            }
+            if (wantsToPass.Count == 3)
+            {
+                PlayerWantsToPass(wantsToPass[0], wantsToPass[1], wantsToPass[2]);
+
+                hasPlayerPassed = true;
+
+                wantsToPass.Clear();
+            }
+        }
     }
 
     public void EndOfRound()
@@ -118,6 +148,26 @@ public class Player : MonoBehaviour
         else playerScore += playerScoreForRound;
 
         playerPot.Clear();
+
+    }
+
+    public void PlayerWantsToPass(Card a, Card b, Card c)
+    {
+
+        ControllerGameClient.singleton.SendPassPacket(a, b, c);
+
+        playerHand.Remove(a);
+        playerHand.Remove(b);
+        playerHand.Remove(c);
+
+        hasPlayerPassed = true;
+
+    }
+
+    public void PlayerHasBeenPassedCards(List<Card> cards)
+    {
+
+        cards.ForEach(x => { playerHand.Add(x); });
 
     }
 }

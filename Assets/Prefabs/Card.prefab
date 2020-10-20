@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 84.711075}
+  m_AnchoredPosition: {x: 0, y: -84.71106}
   m_SizeDelta: {x: 0, y: -169.42212}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &346306842169345228
@@ -170,7 +170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -84.36}
+  m_AnchoredPosition: {x: 0, y: 84.357}
   m_SizeDelta: {x: 0, y: -168.71323}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4994428928174487002
@@ -542,5 +542,6 @@ MonoBehaviour:
   cardSuit: 0
   faceValue: 0
   pointValue: 0
+  ownedBy: {fileID: 0}
   suitText: {fileID: 7476338234304075094}
   valueText: {fileID: 5670728979642968092}

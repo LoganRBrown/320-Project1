@@ -12,47 +12,70 @@ Packets from the Server
 
 JOIN (response) - when the server recieves a JOIN packet, it must decide whether or not the client is allowed to join.
 
+The packet length is determined based on if you fail to join or not.
+
 		O 		L 		Datatype 		Desc
 --------------------------------------------------
 		0		4		ascii			packet type: "JOIN"
 		4		1		uint8			join response (see below)
-		5		1		uint8			Seat at the table (up to 8 seats)
 
 		join response
 		----------------------------
 		(accepted:)
 		0: denied
-		1: player
-		2: spectator
+		1-8: player
+		9: spectator
 		(denied:)
-		3: username to short
-		4: username to long
-		5: username has invalid characters
-		6: username already taken
-		7: username not allowed(Profane?)
-		8: game is full
+		10: username to short
+		11: username to long
+		12: username has invalid characters
+		13: username already taken
+		14: username not allowed(Profane?)
+		15: game is full
 
 UPDT - the state of the game
+
+Add some way to keep track of the score server side?
+
+add a way for players to change their username. (put in chat packet?)
+
 
 		O 		L 		Datatype 		Desc
 -------------------------------------------------------------
 		0		4		ascii			packet type: "UPDT"
-		4		1		uint8			whose turn(1-8)
-		5		1		uint8			who's won? (see below)
-		6		1		uint8			Card Suit
-		7		1		uint8			Card Face Value
+		4		1		uint8			Game State
+		5		1		uint8			whose turn(1-8)
+		6		1		uint8			has anyone lost? (If a player's score exceeds 100 they have lost)
+		7		13?		uint8			player 1 hand
+		20		13?		uint8			player 2 hand
+		33		13?		uint8			player 3 hand
+		46		13?		uint8			player 4 hand
+		59		13?		uint8			player 5 hand
+		72		13?		uint8			player 6 hand
+		85		13?		uint8			player 7 hand
+		98		13?		uint8			player 8 hand
+		111		8?		uint8			Table Pot
+		119		6?		uint8			Kitty
+
+		Kitty
+		-------------------
+		If the kitty exist there will be a specific amount of cards in it
+		3 players: 1 card
+		5 players: 4 cards
+		6 players: 2 cards
+		7 players: 6 cards
 
 		who's won
 		-------------------------------
 		0: playing the game...(no winner)
-		1: player 1 has won the game
-		2: player 2 has won the game
-		3: player 3 has won the game
-		4: player 4 has won the game
-		5: player 5 has won the game
-		6: player 6 has won the game
-		7: player 7 has won the game
-		8: player 8 has won the game
+		1: player 1 has lost the game
+		2: player 2 has lost the game
+		3: player 3 has lost the game
+		4: player 4 has lost the game
+		5: player 5 has lost the game
+		6: player 6 has lost the game
+		7: player 7 has lost the game
+		8: player 8 has lost the game
 		9: the game has been cancelled
 
 		what card has been played
@@ -88,9 +111,18 @@ CHAT - When recieving a CHAT packet from a client, the server sends this chat pa
 -------------------------------------------------------------
 		0		4		ascii			packet type: "CHAT"
 		4		1		uint8			length of senders username
-		5		2		uint16			length of chat message
+		5		2		uint16 BE 		length of chat message
 		7		X 		ascii			senders username X = length of username
-		7+X 	Y 		ascii			chat message Y = length of chat message 	
+		7+X 	Y 		ascii			chat message Y = length of chat message
+
+PASS - When recieving a PASS packet from a client, the server sends this pass packet out to that clients pass partner.
+
+		O 		L 		Datatype 		Desc
+-------------------------------------------------------------
+		0		4		ascii			packet type: "PASS"
+		4		1		uint8			Card 1
+		5		1		uint8			Card 2
+		6		1		uint8			Card 3 	
 
 
 Packets from the client
@@ -119,3 +151,17 @@ PLAY - This packet should be submitted when the play takes their turn.
 		0		4		ascii			packet type: "PLAY"
 		4		1		uint8			Card Suit
 		5		1		uint8			Card Face Value
+
+PASS - This packet should be submitted when the player is trying to pass cards to another player.
+
+(In hearts cards are passed in sets of 3)
+
+		O 		L 		Datatype 		Desc
+-------------------------------------------------------------
+		0		4		ascii			packet type: "PASS"
+		4		1		uint8			Card Suit 1
+		5		1		uint8			Card Face Value 1
+		6		1		uint8			Card Suit 2
+		7		1		uint8			Card Face Value 2
+		8		1		uint8			Card Suit 3
+		9		1		uint8			Card Face Value 3

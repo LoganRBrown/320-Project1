@@ -57,6 +57,8 @@ public class Card : MonoBehaviour
 
     [HideInInspector] public Player ownedBy;
 
+    [HideInInspector] public HeartsGame belongsToGame;
+
     public TextMeshProUGUI suitText; //Text Mesh Pro For displaying the card suit
 
     public TextMeshProUGUI valueText; //Text Mesh Pro for displaying the Value of the card
@@ -151,6 +153,250 @@ public class Card : MonoBehaviour
         bttn.onClick.AddListener(callBack);
 
         ownedBy = player;
+    }
+
+    public void Init(HandPos pos, UnityAction callBack, HeartsGame game)
+    {
+        this.pos = pos;
+
+        Button bttn = GetComponent<Button>();
+
+        bttn.onClick.AddListener(callBack);
+
+        belongsToGame = game;
+    }
+
+    public Card ConvertCardValue(byte cv)
+    {
+
+        switch (cv)
+        {
+            case 1:
+                cardSuit = 0;
+                faceValue = 0;
+                break;
+            case 2:
+                cardSuit = 0;
+                faceValue = 1;
+                break;
+            case 3:
+                cardSuit = 0;
+                faceValue = 2;
+                break;
+            case 4:
+                cardSuit = 0;
+                faceValue = 3;
+                break;
+            case 5:
+                cardSuit = 0;
+                faceValue = 4;
+                break;
+            case 6:
+                cardSuit = 0;
+                faceValue = 5;
+                break;
+            case 7:
+                cardSuit = 0;
+                faceValue = 6;
+                break;
+            case 8:
+                cardSuit = 0;
+                faceValue = 7;
+                break;
+            case 9:
+                cardSuit = 0;
+                faceValue = 8;
+                break;
+            case 10:
+                cardSuit = 0;
+                faceValue = 9;
+                break;
+            case 11:
+                cardSuit = 0;
+                faceValue = 10;
+                break;
+            case 12:
+                cardSuit = 0;
+                pointValue = 13;
+                faceValue = 11;
+                break;
+            case 13:
+                cardSuit = 0;
+                faceValue = 12;
+                break;
+            case 14:
+                cardSuit = 1;
+                faceValue = 0;
+                break;
+            case 15:
+                cardSuit = 1;
+                faceValue = 1;
+                break;
+            case 16:
+                cardSuit = 1;
+                faceValue = 2;
+                break;
+            case 17:
+                cardSuit = 1;
+                faceValue = 3;
+                break;
+            case 18:
+                cardSuit = 1;
+                faceValue = 4;
+                break;
+            case 19:
+                cardSuit = 1;
+                faceValue = 5;
+                break;
+            case 20:
+                cardSuit = 1;
+                faceValue = 6;
+                break;
+            case 21:
+                cardSuit = 1;
+                faceValue = 7;
+                break;
+            case 22:
+                cardSuit = 1;
+                faceValue = 8;
+                break;
+            case 23:
+                cardSuit = 1;
+                faceValue = 9;
+                break;
+            case 24:
+                cardSuit = 1;
+                faceValue = 10;
+                break;
+            case 25:
+                cardSuit = 1;
+                faceValue = 11;
+                break;
+            case 26:
+                cardSuit = 1;
+                faceValue = 12;
+                break;
+            case 27:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 0;
+                break;
+            case 28:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 1;
+                break;
+            case 29:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 2;
+                break;
+            case 30:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 3;
+                break;
+            case 31:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 4;
+                break;
+            case 32:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 5;
+                break;
+            case 33:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 6;
+                break;
+            case 34:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 7;
+                break;
+            case 35:
+                cardSuit = 0;
+                pointValue = 1;
+                faceValue = 8;
+                break;
+            case 36:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 9;
+                break;
+            case 37:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 10;
+                break;
+            case 38:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 11;
+                break;
+            case 39:
+                cardSuit = 2;
+                pointValue = 1;
+                faceValue = 12;
+                break;
+            case 40:
+                cardSuit = 3;
+                faceValue = 0;
+                break;
+            case 41:
+                cardSuit = 3;
+                faceValue = 1;
+                break;
+            case 42:
+                cardSuit = 3;
+                faceValue = 2;
+                break;
+            case 43:
+                cardSuit = 3;
+                faceValue = 3;
+                break;
+            case 44:
+                cardSuit = 3;
+                faceValue = 4;
+                break;
+            case 45:
+                cardSuit = 3;
+                faceValue = 5;
+                break;
+            case 46:
+                cardSuit = 3;
+                faceValue = 6;
+                break;
+            case 47:
+                cardSuit = 3;
+                faceValue = 7;
+                break;
+            case 48:
+                cardSuit = 3;
+                faceValue = 8;
+                break;
+            case 49:
+                cardSuit = 3;
+                faceValue = 9;
+                break;
+            case 50:
+                cardSuit = 3;
+                faceValue = 10;
+                break;
+            case 51:
+                cardSuit = 3;
+                faceValue = 11;
+                break;
+            case 52:
+                cardSuit = 3;
+                faceValue = 12;
+                break;
+
+        }
+
+        return this;
     }
 
 }

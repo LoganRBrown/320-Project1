@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using TMPro;
 using System;
+using System.Text.RegularExpressions;
 
 public class ControllerGameClient : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class ControllerGameClient : MonoBehaviour
     public Transform panelHostDetails;
     public Transform panelUsername;
     public HeartsGame panelGameplay;
+
+    public TextMeshProUGUI chatWindow;
+
+    public TMP_InputField inputChat;
 
     void Start()
     {
@@ -56,6 +61,15 @@ public class ControllerGameClient : MonoBehaviour
         string user = inputUsername.text;
 
         Buffer packet = PacketBuilder.Join(user);
+
+        SendPacketToServer(packet);
+    }
+
+    public void OnButtonStart()
+    {
+        Buffer packet = PacketBuilder.Start();
+
+        this.gameObject.SetActive(false);
 
         SendPacketToServer(packet);
     }
@@ -110,8 +124,9 @@ public class ControllerGameClient : MonoBehaviour
                 byte joinResponse = buffer.ReadUInt8(4);
 
                 // TODO: change which screen we're looking at
-                if (joinResponse == 1 || joinResponse == 2 || joinResponse == 3)
+                if (joinResponse == 1 || joinResponse == 2 || joinResponse == 3 || joinResponse == 4 || joinResponse == 5 || joinResponse == 6 || joinResponse == 7 || joinResponse == 8)
                 {
+                    panelGameplay.tableSeat = joinResponse;
                     panelHostDetails.gameObject.SetActive(false);
                     panelUsername.gameObject.SetActive(false);
                     panelGameplay.gameObject.SetActive(true);
@@ -133,16 +148,36 @@ public class ControllerGameClient : MonoBehaviour
                 buffer.Consume(5);
 
                 break;
+            case "STRT":
+
+                if (buffer.Length < 5) return;
+
+                byte playerCount = buffer.ReadUInt8(4);
+                byte tableSeat = buffer.ReadUInt8(5);
+
+                panelGameplay.playerCount = playerCount;
+                panelGameplay.tableSeat = tableSeat;
+
+                panelGameplay.whatGameState = 1;
+
+                break;
             case "UPDT":
                 if (buffer.Length < 15) return; // not enough data for a UPDT packet
 
-                byte whoseTurn = buffer.ReadUInt8(4);
-                byte gameStatus = buffer.ReadUInt8(5);
+                byte gameState = buffer.ReadUInt8(4);
+                byte whoseTurn = buffer.ReadUInt8(5);
+                byte whoHasLost = buffer.ReadUInt8(6);
+                byte potSize = buffer.ReadUInt8(7);
 
-                byte[] spaces = new byte[9];
-                for(int i = 0; i < 9; i++)
+                List<Card> tempList = new List<Card>();
+
+                for (int i = 0; i <= potSize; i++)
                 {
-                    spaces[i] = buffer.ReadUInt8(6 + i);
+                    
+                    Card tempCard = new Card();
+
+                    tempCard.ConvertCardValue(buffer.ReadUInt8(i));
+                    tempList.Add(tempCard);
                 }
 
                 // TODO: Switch to gameplay screen
@@ -150,7 +185,7 @@ public class ControllerGameClient : MonoBehaviour
                 panelUsername.gameObject.SetActive(false);
                 panelGameplay.gameObject.SetActive(true);
 
-                panelGameplay.UpdateFromServer(gameStatus, whoseTurn, spaces);
+                panelGameplay.UpdateFromServer(gameState, whoseTurn, whoHasLost, tempList);
 
                 buffer.Consume(15);
 
@@ -175,8 +210,70 @@ public class ControllerGameClient : MonoBehaviour
                 panelGameplay.gameObject.SetActive(true);
                 // TODO: Update Chat View
 
+                AddMessageToChatDisplay($"{username}: {message}");
+
                 buffer.Consume(fullPacketLength);
 
+                break;
+            case "PASS":
+
+                if (panelGameplay.tableSeat == buffer.ReadUInt8(4))
+                { 
+                    List<Card> tempListTwo = new List<Card>();
+
+                    Card card1 = new Card();
+                    Card card2 = new Card();
+                    Card card3 = new Card();
+
+                    card1.ConvertCardValue(buffer.ReadUInt8(5));
+                    card2.ConvertCardValue(buffer.ReadUInt8(6));
+                    card3.ConvertCardValue(buffer.ReadUInt8(7));
+
+                    tempListTwo.Add(card1);
+                    tempListTwo.Add(card2);
+                    tempListTwo.Add(card3);
+
+                    panelGameplay.myPlayer.PlayerHasBeenPassedCards(tempListTwo);
+
+                    if (panelGameplay.tableSeat == 1) panelGameplay.listOfPlayers[buffer.ReadUInt8(4)].hasPlayerPassed = true;
+                }
+                break;
+            case "HAND":
+                if(panelGameplay.tableSeat == buffer.ReadUInt8(4))
+                {
+
+                    for(int i = 0; i <= buffer.ReadUInt8(5); i++)
+                    {
+                        Card tempCard = new Card();
+
+                        tempCard = tempCard.ConvertCardValue(buffer.ReadUInt8(i+6));
+
+                        panelGameplay.myPlayer.playerHand.Add(tempCard);
+                    }
+
+                }
+                break;
+            case "TPOT":
+                if(panelGameplay.tableSeat == buffer.ReadUInt8(4))
+                {
+                    for (int i = 0; i <= panelGameplay.playerCount; i++)
+                    {
+                        Card tempCard = new Card();
+
+                        tempCard = tempCard.ConvertCardValue(buffer.ReadUInt8(i+5));
+
+                        panelGameplay.myPlayer.playerPot.Add(tempCard);
+                    }
+                }
+                break;
+            case "RSCR":
+                panelGameplay.listOfPlayers.ForEach(p =>
+                {
+                    int offset = 4;
+
+                    p.playerScore = buffer.ReadUInt8(offset++);
+
+                });
                 break;
             default:
                 print("unknown packet Identifier...");
@@ -184,6 +281,23 @@ public class ControllerGameClient : MonoBehaviour
                 buffer.Clear();
                 break;
         }
+    }
+
+    public void AddMessageToChatDisplay(string txt)
+    {
+        chatWindow.text += $"{txt}\n";
+    }
+
+    public void UserDoneEditingMessage(string txt)
+    {
+        if(!new Regex(@"^(\s|\t)*$").IsMatch(txt))
+        {
+            SendPacketToServer(PacketBuilder.Chat(txt));
+            inputChat.text = "";
+        }
+
+        inputChat.Select();
+        inputChat.ActivateInputField();
     }
 
     async public void SendPacketToServer(Buffer packet)
@@ -197,5 +311,10 @@ public class ControllerGameClient : MonoBehaviour
     {
         SendPacketToServer( PacketBuilder.Play(x, y) );
         
+    }
+
+    public void SendPassPacket(Card a, Card b, Card c)
+    {
+        SendPacketToServer(PacketBuilder.Pass(a.cardSuit, a.faceValue, b.cardSuit, b.faceValue, c.cardSuit, c.faceValue));
     }
 }
