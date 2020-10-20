@@ -73,7 +73,7 @@ exports.Client = class Client {
 					const desiredMessage = this.buffer.slice(5, 5+lengthOfMessage).toString();
 
 					const packet = PacketBuilder.chat(this,lengthOfUsername,lengthOfMessage, desiredMessage);
-					this.sendPacket(packet);
+					server.broadcastPacket(packet);
 
 
 

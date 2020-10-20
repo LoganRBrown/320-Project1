@@ -122,7 +122,21 @@ PASS - When recieving a PASS packet from a client, the server sends this pass pa
 		0		4		ascii			packet type: "PASS"
 		4		1		uint8			Card 1
 		5		1		uint8			Card 2
-		6		1		uint8			Card 3 	
+		6		1		uint8			Card 3
+
+TPOT - When a trick ends this packet is sent to the player that took that trick. TPOT = Table Pot
+
+		O 		L 		Datatype 		Desc
+-------------------------------------------------------------
+		0		4		ascii			packet type: "TPOT"
+		4		1		uint8			Card 1
+		5		1		uint8			Card 2
+		6?		1		uint8			Card 3
+		7?		1		uint8			Card 4
+		8?		1		uint8			Card 5
+		9?		1		uint8			Card 6
+		10?		1		uint8			Card 7
+		11?		1		uint8			Card 8
 
 
 Packets from the client
