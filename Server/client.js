@@ -8,8 +8,8 @@ exports.Client = class Client {
 				this.socket = sock;
 				this.server = server;
 				this.username = "";
-				this.hand[] = [];
-				this.pot[] = [];
+				this.hand = [];
+				this.pot = [];
 				this.pass = [];
 				this.cardPlayed = 0;
 				this.score = 0;
@@ -72,8 +72,8 @@ exports.Client = class Client {
 
 					const desiredMessage = this.buffer.slice(5, 5+lengthOfMessage).toString();
 
-					const packet = PacketBuilder.chat(this,lengthOfUsername,lengthOfMessage, desiredMessage);
-					server.broadcastPacket(packet);
+					const packet3 = PacketBuilder.chat(this,lengthOfUsername,lengthOfMessage, desiredMessage);
+					this.server.broadcastPacket(packet3);
 
 
 
@@ -106,8 +106,8 @@ exports.Client = class Client {
 
 					if(playerNumber = seatAtTable){
 
-						var suit[];
-						var val[];
+						const suit =[];
+						const val = [];
 
 						suit.push(this.buffer.readUInt8(5));
 						suit.push(this.buffer.readUInt8(7));
@@ -150,10 +150,10 @@ exports.Client = class Client {
 
 					break;
 
-				case "PASS"
+				case "PASS":
 
-					var suit[];
-					var val[];
+					const psuit = [];
+					const pval = [];
 
 					suit.push(this.buffer.readUInt8(5));
 					val.push(this.buffer.readUInt8(6));
@@ -164,7 +164,7 @@ exports.Client = class Client {
 
 					for (var i = 0; i <= 3; i++) {
 						if(suit[i] && val[i] != null){
-								this.pass.push(convertCardValues(suit[i], val[i]));
+								this.pass.push(convertCardValues(psuit[i], pval[i]));
 							}
 					}
 
@@ -180,7 +180,7 @@ exports.Client = class Client {
 
 						this.buffer = this.buffer.slice(6, 6 + buffSize);
 
-						const playerNumber = this.buffer.readUInt8(4);
+						playerNumber = this.buffer.readUInt8(4);
 
 					if(playerNumber = seatAtTable){
 
@@ -197,7 +197,7 @@ exports.Client = class Client {
 
 						break;
 
-				case "STRT"
+				case "STRT":
 
 					if (this.buffer.length < 4 ) return;
 
@@ -206,8 +206,8 @@ exports.Client = class Client {
 					break;
 
 				case "RSCR":
-					const packet = PacketBuilder.rscr();
-					sendPacket(packet);
+					const packet4 = PacketBuilder.rscr();
+					sendPacket(packet4);
 					break;
 
 				default:
@@ -223,7 +223,7 @@ exports.Client = class Client {
 
 		sendPacket(packet){
 			this.socket.write(packet);
-		},
+		}
 		convertCardValues(suit, value){
 
 			switch(suit){
@@ -412,7 +412,7 @@ exports.Client = class Client {
 					break;
 			}
 
-		},
+		}
 
 
 };

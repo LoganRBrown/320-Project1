@@ -1,4 +1,4 @@
 ECHO Launching server...
 
-node ttt.js
+node hearts.js
 pause

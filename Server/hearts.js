@@ -7,8 +7,8 @@ const Game = {
 	gameState: 0,
 	whoHasLost: 0,
 	passcounter: 0,
-	scoreCounter: 0;
-	firstCard: null;
+	scoreCounter: 0,
+	firstCard: null,
 	oneDeck: [
 		[1,2,3,4,5,6,7,8,9,10,11,12,13], //Spades 
 		[14,15,16,17,18,19,20,21,21,22,23,24,25,26], //clubs 
@@ -109,50 +109,50 @@ const Game = {
 		switch(passcounter){
 			case 1:
 				switch(client.seatAtTable){
-					case 1
+					case 1:
 						const packet = PacketBuilder.pass(4, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 2
-						const packet = PacketBuilder.pass(5, client.pass[0],client.pass[1],client.pass[2]);
+					case 2:
+						packet = PacketBuilder.pass(5, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 3
-						const packet = PacketBuilder.pass(6, client.pass[0],client.pass[1],client.pass[2]);
+					case 3:
+						packet = PacketBuilder.pass(6, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 4
-						const packet = PacketBuilder.pass(7, client.pass[0],client.pass[1],client.pass[2]);
+					case 4:
+						 packet = PacketBuilder.pass(7, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 5
-						const packet = PacketBuilder.pass(8, client.pass[0],client.pass[1],client.pass[2]);
+					case 5:
+						 packet = PacketBuilder.pass(8, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 6
-						const packet = PacketBuilder.pass(1, client.pass[0],client.pass[1],client.pass[2]);
+					case 6:
+						 packet = PacketBuilder.pass(1, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 7
-						const packet = PacketBuilder.pass(2, client.pass[0],client.pass[1],client.pass[2]);
+					case 7:
+						 packet = PacketBuilder.pass(2, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 8
-						const packet = PacketBuilder.pass(3, client.pass[0],client.pass[1],client.pass[2]);
+					case 8:
+						 packet = PacketBuilder.pass(3, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
@@ -161,50 +161,50 @@ const Game = {
 				break;
 			case 2:
 				switch(client.seatAtTable){
-					case 1
-						const packet = PacketBuilder.pass(, client.pass[0],client.pass[1],client.pass[2]);
+					case 1:
+						 packet = PacketBuilder.pass(6, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 2
-						const packet = PacketBuilder.pass(7, client.pass[0],client.pass[1],client.pass[2]);
+					case 2:
+						 packet = PacketBuilder.pass(7, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 3
-						const packet = PacketBuilder.pass(8, client.pass[0],client.pass[1],client.pass[2]);
+					case 3:
+						 packet = PacketBuilder.pass(8, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 4
-						const packet = PacketBuilder.pass(1, client.pass[0],client.pass[1],client.pass[2]);
+					case 4:
+						 packet = PacketBuilder.pass(1, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 5
-						const packet = PacketBuilder.pass(2, client.pass[0],client.pass[1],client.pass[2]);
+					case 5:
+						 packet = PacketBuilder.pass(2, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 6
-						const packet = PacketBuilder.pass(3, client.pass[0],client.pass[1],client.pass[2]);
+					case 6:
+						 packet = PacketBuilder.pass(3, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 7
-						const packet = PacketBuilder.pass(4, client.pass[0],client.pass[1],client.pass[2]);
+					case 7:
+						 packet = PacketBuilder.pass(4, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 8
-						const packet = PacketBuilder.pass(5, client.pass[0],client.pass[1],client.pass[2]);
+					case 8:
+						 packet = PacketBuilder.pass(5, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
@@ -213,50 +213,50 @@ const Game = {
 				break;
 			case 3:
 				switch(client.seatAtTable){
-					case 1
-						const packet = PacketBuilder.pass(5, client.pass[0],client.pass[1],client.pass[2]);
+					case 1:
+						 packet = PacketBuilder.pass(5, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 2
-						const packet = PacketBuilder.pass(8, client.pass[0],client.pass[1],client.pass[2]);
+					case 2:
+						 packet = PacketBuilder.pass(8, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 3
-						const packet = PacketBuilder.pass(7, client.pass[0],client.pass[1],client.pass[2]);
+					case 3:
+						 packet = PacketBuilder.pass(7, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 4
-						const packet = PacketBuilder.pass(6, client.pass[0],client.pass[1],client.pass[2]);
+					case 4:
+						 packet = PacketBuilder.pass(6, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 5
-						const packet = PacketBuilder.pass(1, client.pass[0],client.pass[1],client.pass[2]);
+					case 5:
+						 packet = PacketBuilder.pass(1, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 6
-						const packet = PacketBuilder.pass(4, client.pass[0],client.pass[1],client.pass[2]);
+					case 6:
+						 packet = PacketBuilder.pass(4, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 7
-						const packet = PacketBuilder.pass(3, client.pass[0],client.pass[1],client.pass[2]);
+					case 7:
+						 packet = PacketBuilder.pass(3, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 8
-						const packet = PacketBuilder.pass(2, client.pass[0],client.pass[1],client.pass[2]);
+					case 8:
+						 packet = PacketBuilder.pass(2, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
@@ -264,50 +264,50 @@ const Game = {
 				}
 				break;
 			case 4:switch(client.seatAtTable){
-					case 1
-						const packet = PacketBuilder.pass(1, client.pass[0],client.pass[1],client.pass[2]);
+					case 1:
+						 packet = PacketBuilder.pass(1, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 2
-						const packet = PacketBuilder.pass(2, client.pass[0],client.pass[1],client.pass[2]);
+					case 2:
+						 packet = PacketBuilder.pass(2, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 3
-						const packet = PacketBuilder.pass(3, client.pass[0],client.pass[1],client.pass[2]);
+					case 3:
+						 packet = PacketBuilder.pass(3, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 4
-						const packet = PacketBuilder.pass(4, client.pass[0],client.pass[1],client.pass[2]);
+					case 4:
+						 packet = PacketBuilder.pass(4, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 5
-						const packet = PacketBuilder.pass(5, client.pass[0],client.pass[1],client.pass[2]);
+					case 5:
+						 packet = PacketBuilder.pass(5, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 6
-						const packet = PacketBuilder.pass(6, client.pass[0],client.pass[1],client.pass[2]);
+					case 6:
+						 packet = PacketBuilder.pass(6, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 7
-						const packet = PacketBuilder.pass(7, client.pass[0],client.pass[1],client.pass[2]);
+					case 7:
+						 packet = PacketBuilder.pass(7, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
 						break;
-					case 8
-						const packet = PacketBuilder.pass(8, client.pass[0],client.pass[1],client.pass[2]);
+					case 8:
+						 packet = PacketBuilder.pass(8, client.pass[0],client.pass[1],client.pass[2]);
 						client.sendPacket(packet);
 						client.hasPlayerPassed = false;
 						client.pass = [];
@@ -398,5 +398,5 @@ const Game = {
 
 };
 
-Server.start(Game);
+server.start(Game);
 

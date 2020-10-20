@@ -87,7 +87,7 @@ exports.PacketBuilder = {
 
 		return packet;
 	},
-	tpot(target, pot[]){
+	tpot(target, pot = []){
 		const packet = Buffer.alloc(5 + server.clients.length);
 		packet.write("TPOT");
 		packet.writeUInt8(target, 4);
